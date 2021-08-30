@@ -10,7 +10,7 @@
   (x org-x (setter org-x))
   (y org-y (setter org-y)))
 
-(define (move-org org x y)
+(define (move-org! org x y)
   (let ((new-x (+ (org-x org) x))
         (new-y (+ (org-y org) y)))
     (unless (or (< new-x 0)
@@ -20,10 +20,10 @@
                 (>= new-y +world-height+))
       (set! (org-y org) new-y))))
 
-(define (update-org org)
-  (move-org org 1 1))
+(define (update-org! org)
+  (move-org! org 1 1))
 
-(define (update-orgs orgs)
+(define (update-orgs! orgs)
   (unless (null? orgs)
-    (update-org (car orgs))
-    (update-orgs (cdr orgs))))
+    (update-org! (car orgs))
+    (update-orgs! (cdr orgs))))
