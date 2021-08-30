@@ -1,15 +1,29 @@
+(declare (uses organism))
+(declare (uses screen))
+
+(import (srfi 27))
+(import miscmacros)
 (import (prefix sdl2 "sdl2:"))
 
-(sdl2:set-main-ready!)
-(sdl2:init! '(video))
+(define target-fps 60)
+(define delay-ms (round (/ 1000 target-fps)))
 
-(on-exit sdl2:quit!)
+(define (make-random-orgs count)
+  (if (zero? count)
+      '()
+      (cons (make-org (random-integer 640)
+                      (random-integer 480))
+            (make-random-orgs (- count 1)))))
+(define orgs (make-random-orgs 10))
 
-(define (main)
-  (define window (sdl2:create-window! "vita" 0 0 640 480))
-  (sdl2:fill-rect! (sdl2:window-surface window)
-                   #f
-                   (sdl2:make-color 0 0 0))
-  (sdl2:update-window-surface! window)
-  (sdl2:delay! 2000)
-  (sdl2:quit!))
+(init-screen!)
+(let ((done #f))
+  (while (not done)
+    (let ((ev (sdl2:wait-event!)))
+      (case (sdl2:event-type ev)
+
+        ((window)
+         (draw-scene! orgs))
+
+        ((quit)
+         (set! done #t))))))
