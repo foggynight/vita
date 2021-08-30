@@ -3,8 +3,8 @@
 (import (chicken condition))
 (import (prefix sdl2 "sdl2:"))
 
-(define +screen-width+  640)
-(define +screen-height+ 480)
+(define +screen-width+  +world-width+)
+(define +screen-height+ +world-height+)
 
 (define +bg-color+  (sdl2:make-color 0 0 0))
 (define +org-color+ (sdl2:make-color 0 255 0))

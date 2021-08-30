@@ -17,13 +17,21 @@
 (define orgs (make-random-orgs 10))
 
 (init-screen!)
-(let ((done #f))
+(let ((done #f)
+      (event #f))
   (while (not done)
-    (let ((ev (sdl2:wait-event!)))
-      (case (sdl2:event-type ev)
+    (sdl2:pump-events!)
+    (while (sdl2:has-events?)
+      (set! event (sdl2:poll-event! event))
+      (case (sdl2:event-type event)
 
         ((window)
          (draw-scene! orgs))
 
         ((quit)
-         (set! done #t))))))
+         (set! done #t))
+
+        ))
+    (update-org-list orgs)
+    (draw-scene! orgs)
+    (sdl2:delay! delay-ms)))
