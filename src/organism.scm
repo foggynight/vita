@@ -23,7 +23,7 @@
 (define (update-org org)
   (move-org org 1 1))
 
-(define (update-org-list orgs)
+(define (update-orgs orgs)
   (unless (null? orgs)
     (update-org (car orgs))
-    (update-org-list (cdr orgs))))
+    (update-orgs (cdr orgs))))
