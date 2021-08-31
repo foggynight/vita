@@ -18,6 +18,7 @@
 (define orgs (make-random-orgs 10))
 
 (init-screen!)
+(draw-scene! orgs)
 (let ((done #f)
       (event #f))
   (while (not done)
