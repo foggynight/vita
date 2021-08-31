@@ -34,6 +34,6 @@
          (set! done #t))
 
         ))
-    (update-orgs! orgs)
+    (set! orgs (update-orgs! orgs))
     (draw-scene! orgs)
     (sdl2:delay! delay-ms)))

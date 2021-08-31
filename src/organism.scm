@@ -28,9 +28,13 @@
     (move-org! org
                (random-integer 2)
                (random-integer 2))
-    (set! (org-energy org) (- (org-energy org) 1))))
+    (set! (org-energy org) (- (org-energy org) 1)))
+  (> (org-energy org) 0))
 
 (define (update-orgs! orgs)
-  (unless (null? orgs)
-    (update-org! (car orgs))
-    (update-orgs! (cdr orgs))))
+  (if (null? orgs)
+      '()
+      (if (update-org! (car orgs))
+          (cons (car orgs)
+                (update-orgs! (cdr orgs)))
+          (update-orgs! (cdr orgs)))))
