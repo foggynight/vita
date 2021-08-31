@@ -1,14 +1,17 @@
 (declare (unit organism))
 
+(import (srfi 27))
+
 (define +world-width+  640)
 (define +world-height+ 480)
 
+(define +move-cost+ 1)
+
 ;; Record type representing an organism with an x-y position.
-(define-record-type org
-  (make-org x y)
-  org?
-  (x org-x (setter org-x))
-  (y org-y (setter org-y)))
+(define-record org
+  (setter x)
+  (setter y)
+  (setter energy))
 
 (define (move-org! org x y)
   (let ((new-x (+ (org-x org) x))
@@ -21,7 +24,11 @@
       (set! (org-y org) new-y))))
 
 (define (update-org! org)
-  (move-org! org 1 1))
+  (when (>= (org-energy org) +move-cost+)
+    (move-org! org
+               (random-integer 2)
+               (random-integer 2))
+    (set! (org-energy org) (- (org-energy org) 1))))
 
 (define (update-orgs! orgs)
   (unless (null? orgs)

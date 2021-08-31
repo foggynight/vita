@@ -12,7 +12,8 @@
   (if (zero? count)
       '()
       (cons (make-org (random-integer 640)
-                      (random-integer 480))
+                      (random-integer 480)
+                      100)
             (make-random-orgs (- count 1)))))
 (define orgs (make-random-orgs 10))
 
